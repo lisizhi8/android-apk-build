@@ -1,10 +1,13 @@
 package swust.edu.lab2.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -12,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -23,7 +27,6 @@ import swust.edu.lab2.entity.User;
 public class RegisterActivity extends AppCompatActivity {
     // 这个变量用来存最终结果，可以是 "0"、"1"、"2" 或者自定义文件的绝对路径
     private String finalAvatarSource = "0";
-    private ImageView ivAvatarUpload;
     private ActivityResultLauncher<Intent> albumLauncher;
 
     private EditText etRegUsername;
@@ -31,7 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etRegConfirm;
     private EditText etRegNickname;
     private AppCompatButton btnRegister;
-    private ImageView ivAvatar0, ivAvatar1, ivAvatar2;
+    private ShapeableImageView ivAvatar0, ivAvatar1, ivAvatar2, ivAvatarUploadShape;
+    private ImageView ivAvatarUpload;
 
     private DatabaseHelper dbHelper;
 
@@ -52,7 +56,11 @@ public class RegisterActivity extends AppCompatActivity {
         ivAvatar0 = findViewById(R.id.iv_avatar_0);
         ivAvatar1 = findViewById(R.id.iv_avatar_1);
         ivAvatar2 = findViewById(R.id.iv_avatar_2);
+        ivAvatarUploadShape = findViewById(R.id.iv_avatar_upload);
         ivAvatarUpload = findViewById(R.id.iv_avatar_upload);
+        
+        // 初始化：默认选中第一个头像
+        updateAvatarSelection(ivAvatar0);
 
         // 注册相册返回的回调（新版 Android 标准写法，不需要管老旧的 RequestCode）
         albumLauncher = registerForActivityResult(
@@ -77,11 +85,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 // 💡【体验优化】让用户上传的照片居中裁剪，防止图片被压扁或拉长变形
                                 ivAvatarUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
                                 
-                                // 3. 清除内置头像的选中高亮
-                                ivAvatar0.setBackgroundResource(0);
-                                ivAvatar1.setBackgroundResource(0);
-                                ivAvatar2.setBackgroundResource(0);
-                                ivAvatarUpload.setBackgroundResource(R.drawable.sl_avatar_bg);
+                                // 3. 高亮选中自定义头像（添加青绿色边框）
+                                updateAvatarSelection(ivAvatarUploadShape);
                             }
                         }
                     }
@@ -91,17 +96,17 @@ public class RegisterActivity extends AppCompatActivity {
         // 点击内置头像
         ivAvatar0.setOnClickListener(v -> {
             finalAvatarSource = "0";
-            clearUploadFocus(ivAvatar0, ivAvatar1, ivAvatar2);
+            updateAvatarSelection(ivAvatar0);
         });
         
         ivAvatar1.setOnClickListener(v -> {
             finalAvatarSource = "1";
-            clearUploadFocus(ivAvatar1, ivAvatar0, ivAvatar2);
+            updateAvatarSelection(ivAvatar1);
         });
         
         ivAvatar2.setOnClickListener(v -> {
             finalAvatarSource = "2";
-            clearUploadFocus(ivAvatar2, ivAvatar0, ivAvatar1);
+            updateAvatarSelection(ivAvatar2);
         });
 
         // 点击自定义上传按钮 -> 唤起相册
@@ -134,11 +139,27 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void clearUploadFocus(ImageView selected, ImageView btn1, ImageView btn2) {
-        selected.setBackgroundResource(R.drawable.sl_avatar_bg);
-        btn1.setBackgroundResource(0);
-        btn2.setBackgroundResource(0);
-        ivAvatarUpload.setBackgroundResource(0);
+    /**
+     * 统一的高亮选中方法：给选中的头像添加青绿色边框，其他头像边框清零
+     * @param selectedAvatar 被选中的头像控件
+     */
+    private void updateAvatarSelection(View selectedAvatar) {
+        // 建立一个数组，包含所有头像控件
+        View[] allAvatars = {ivAvatar0, ivAvatar1, ivAvatar2, ivAvatarUploadShape};
+        
+        for (View avatar : allAvatars) {
+            if (avatar instanceof ShapeableImageView) {
+                ShapeableImageView shapeView = (ShapeableImageView) avatar;
+                if (shapeView == selectedAvatar) {
+                    // 如果是被选中的头像：加上 6 像素粗的青绿色边框
+                    shapeView.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#89C5B5")));
+                    shapeView.setStrokeWidth(6f);
+                } else {
+                    // 没被选中的头像：边框清零
+                    shapeView.setStrokeWidth(0f);
+                }
+            }
+        }
     }
 
     // 将相册图片拷贝到 App 内部私有存储空间的灵魂方法
