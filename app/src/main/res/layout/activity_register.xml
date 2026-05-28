@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FB"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="36dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新用户注册"
+            android:textSize="28sp"
+            android:textColor="#1A1A1A"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="32dp"
+            android:letterSpacing="0.05"/>
+
+        <EditText
+            android:id="@+id/et_reg_username"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:hint="设置用户名"
+            android:textColorHint="#A0AAB5"
+            android:textColor="#2D3436"
+            android:paddingLeft="20dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/et_reg_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="设置密码"
+                android:inputType="textPassword"
+                android:textColorHint="#A0AAB5"
+                android:textColor="#2D3436"
+                android:paddingStart="20dp"
+                android:paddingEnd="52dp"
+                android:background="@drawable/bg_input"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/iv_reg_pwd_toggle"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_eye_hidden"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"/>
+        </RelativeLayout>
+
+        <EditText
+        android:id="@+id/et_reg_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:hint="确认密码"
+        android:inputType="textPassword"
+        android:textColorHint="#A0AAB5"
+        android:textColor="#2D3436"
+        android:paddingLeft="20dp"
+        android:background="@drawable/bg_input"
+        android:layout_marginBottom="16dp"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:id="@+id/et_reg_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@drawable/bg_input"
+        android:hint="个性昵称（用于主页显示）"
+        android:paddingStart="16dp"
+        android:textColor="#1A1A1A"
+        android:textColorHint="#CBD5E1"
+        android:textSize="15sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择一个头像"
+        android:textColor="#64748B"
+        android:textSize="14sp"
+        android:layout_gravity="start"
+        android:layout_marginBottom="12dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="32dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_avatar_0"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/avatar_0"
+            android:layout_marginEnd="12dp"
+            android:padding="4dp"
+            android:background="@drawable/sl_avatar_bg"
+            android:contentDescription="头像 1"
+            app:shapeAppearanceOverlay="@style/CircleImageStyle"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_avatar_1"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/avatar_1"
+            android:layout_marginEnd="12dp"
+            android:padding="4dp"
+            android:contentDescription="头像 2"
+            app:shapeAppearanceOverlay="@style/CircleImageStyle"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_avatar_2"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/avatar_2"
+            android:layout_marginEnd="12dp"
+            android:padding="4dp"
+            android:contentDescription="头像 3"
+            app:shapeAppearanceOverlay="@style/CircleImageStyle"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_avatar_upload"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@android:drawable/ic_menu_add"
+            android:tint="#8BBDB3"
+            android:background="@drawable/sl_avatar_bg"
+            android:padding="4dp"
+            android:contentDescription="上传自定义头像"
+            app:shapeAppearanceOverlay="@style/CircleImageStyle"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="注   册"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button"/>
+
+        <TextView
+            android:id="@+id/tv_back_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已有账号？去登录"
+            android:textColor="#52998A"
+            android:textSize="14sp"
+            android:layout_marginTop="24dp"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+</ScrollView>
